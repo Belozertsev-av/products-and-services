@@ -1,0 +1,50 @@
+.q-btn {
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6rem;
+  text-transform: none;
+  letter-spacing: normal;
+  background-color: var(--q-secondary);
+  border-radius: 0.9rem !important;
+
+  &--round {
+    border-radius: 2rem !important;
+  }
+
+  &--flat {
+    color: var(--q-primary);
+    background: none;
+  }
+}
+
+.q-field{
+  &__control {
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.6rem;
+    text-transform: none;
+    letter-spacing: normal;
+    background-color: var(--q-secondary);
+    border-radius: 0.9rem !important;
+  }
+
+  &__label {
+    color: var(--font-color);
+  }
+
+  &--round {
+    border-radius: 2rem !important;
+  }
+
+  &--flat {
+    color: var(--q-primary);
+    background: none;
+  }
+}
+
+.q-menu {
+  margin-top: 0.5rem !important;
+  border-radius: 0.8rem;
+}
