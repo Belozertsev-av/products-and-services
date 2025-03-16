@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
     "@nuxt/eslint",
     "vue-yandex-maps/nuxt",
+    "@prisma/nuxt",
   ],
   pinia: {
     storesDirs: ["./stores/**"],
@@ -39,5 +40,16 @@ export default defineNuxtConfig({
   css: ["@/assets/styles/quasar-overrides.scss"],
   yandexMaps: {
     apikey: process.env.YANDEX_MAP_API_KEY,
+  },
+  prisma: {
+    autoSetupPrisma: true,
+  },
+  vite: {
+    resolve: {
+      alias: {
+        ".prisma/client/index-browser":
+          "./node_modules/.prisma/client/index-browser.js",
+      },
+    },
   },
 })
