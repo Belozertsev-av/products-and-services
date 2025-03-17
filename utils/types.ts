@@ -77,3 +77,8 @@ export enum Days {
   sat = "Суббота",
   sun = "Восскресенье",
 }
+
+export interface IUserCredentials {
+  login: string
+  password: string
+}

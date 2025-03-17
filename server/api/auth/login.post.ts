@@ -5,6 +5,8 @@ import { redis } from "~/server/redis"
 import prisma from "~/lib/prisma"
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig()
+
   const body = await readBody(event)
   const { login, password } = body
 
@@ -23,15 +25,13 @@ export default defineEventHandler(async (event) => {
   // Генерация токенов
   const accessToken = jwt.sign(
     { login: user.login, firstName: user.firstName, lastName: user.lastName },
-    process.env.JWT_SECRET!,
+    config.jwtSecret,
     { expiresIn: "15m" },
   )
 
-  const refreshToken = jwt.sign(
-    { login: user.login },
-    process.env.JWT_SECRET!,
-    { expiresIn: "7d" },
-  )
+  const refreshToken = jwt.sign({ login: user.login }, config.jwtSecret, {
+    expiresIn: "7d",
+  })
 
   // Сохранение refresh token в Redis
   await redis.set(

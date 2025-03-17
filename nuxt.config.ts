@@ -1,5 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  runtimeConfig: {
+    jwtSecret: process.env.JWT_SECRET,
+  },
   app: {
     pageTransition: { name: "fade", mode: "out-in" },
     layoutTransition: { name: "fade", mode: "out-in" },
@@ -20,6 +23,7 @@ export default defineNuxtConfig({
     storesDirs: ["./stores/**"],
   },
   quasar: {
+    plugins: ["Notify"],
     components: {
       defaults: {
         QBtn: {

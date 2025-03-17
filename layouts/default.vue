@@ -2,6 +2,7 @@
   <div class="wrapper">
     <ps-header />
     <main
+      style="margin-top: 6.1rem"
       :style="device.isMobileOrTablet ? 'padding: 0 1rem' : 'padding: 0 2rem'"
     >
       <company-info
