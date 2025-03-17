@@ -4,19 +4,18 @@ import type { IUser, IUserCredentials } from "~/utils/types"
 export const useAuthStore = defineStore(
   "auth",
   () => {
-    const _accessToken = ref<string | null>(null)
+    const accessToken = ref<string | null>(null)
     const user = ref<IUser | null>(null)
 
     const login = async (credentials: IUserCredentials) => {
       try {
-        const { accessToken } = await $fetch<{ accessToken: string }>(
-          "/api/auth/login",
-          {
-            method: "POST",
-            body: credentials,
-          },
-        )
-        _accessToken.value = accessToken
+        const { accessToken: _accessToken } = await $fetch<{
+          accessToken: string
+        }>("/api/auth/login", {
+          method: "POST",
+          body: credentials,
+        })
+        accessToken.value = _accessToken
         user.value = await getUserData()
       } catch (error: any) {
         throw new Error(error.data?.message || "Authorization failed")
@@ -25,7 +24,7 @@ export const useAuthStore = defineStore(
 
     const logout = async () => {
       await $fetch("/api/auth/logout", { method: "POST" })
-      _accessToken.value = null
+      accessToken.value = null
       user.value = null
     }
 
@@ -33,7 +32,7 @@ export const useAuthStore = defineStore(
       try {
         return await $fetch<IUser>("/api/auth/profile", {
           headers: {
-            authorization: `Bearer ${_accessToken.value}`,
+            authorization: `Bearer ${accessToken.value}`,
           },
         })
       } catch (error: any) {
@@ -63,7 +62,7 @@ export const useAuthStore = defineStore(
       // Если не удалось, пробуем обновить токен
       const maybeRefreshedToken = await refreshToken()
       if (maybeRefreshedToken) {
-        _accessToken.value = maybeRefreshedToken
+        accessToken.value = maybeRefreshedToken
 
         // Повторная попытка после обновления
         const maybeUserFound = await getUserData()
@@ -75,12 +74,12 @@ export const useAuthStore = defineStore(
       }
 
       // Если всё провалилось
-      _accessToken.value = null
+      accessToken.value = null
       user.value = null
       return false
     }
 
-    return { user, checkAuth, login, refreshToken, logout }
+    return { user, accessToken, checkAuth, login, refreshToken, logout }
   },
   { persist: true },
 )

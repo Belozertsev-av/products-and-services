@@ -6,10 +6,13 @@
       :style="device.isMobileOrTablet ? 'padding: 0 1rem' : 'padding: 0 2rem'"
     >
       <company-info
-        v-if="!device.isMobileOrTablet"
+        v-if="!device.isMobileOrTablet && company"
         :company-info="company"
       />
-      <category-menu :agents-count="company.agentsCount" />
+      <category-menu
+        v-if="company"
+        :agents-count="company.agentsCount"
+      />
       <q-separator />
       <slot />
     </main>
@@ -22,13 +25,15 @@ import type { ICompanyInfo } from "~/utils/types"
 
 const device = useDevice()
 
-const company = ref<ICompanyInfo>({
-  name: "Наследие",
-  phoneNumber: "+7 (951) 669-21-54",
-  img: "company_logo.webp",
-  agentsCount: 6,
-  premium: true,
-  rate: 4.7,
-  reviewCount: 19,
+const authStore = useAuthStore()
+const company = ref<ICompanyInfo | null>(null)
+
+onBeforeMount(async () => {
+  company.value = await $fetch<ICompanyInfo>("/api/companies/1", {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${authStore.accessToken}`,
+    },
+  })
 })
 </script>

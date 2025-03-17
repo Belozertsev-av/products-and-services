@@ -70,6 +70,7 @@ const onSubmit = async () => {
 
     $q.notify({
       type: "positive",
+      color: "primary",
       message: "Успешный вход!",
       position: "bottom",
     })

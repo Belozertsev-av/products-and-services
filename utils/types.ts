@@ -43,7 +43,7 @@ export interface IAgentInfo extends IStatistics {
   id: number
   firstName: string
   lastName: string
-  avatar: string
+  avatar: string | null
   description: string
 }
 
@@ -52,7 +52,7 @@ export interface ICompanyInfo extends IStatistics {
   name: string
   phoneNumber: string
   agentsCount: number
-  img: string
+  img: string | null
 }
 
 export interface ICompanyAdditionalInfo {
