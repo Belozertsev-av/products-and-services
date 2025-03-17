@@ -1,3 +1,5 @@
+import type { User } from "@prisma/client"
+
 export interface IGroupedSelectOption {
   label: Category
   options: ISelectOption[]
@@ -46,6 +48,7 @@ export interface IAgentInfo extends IStatistics {
 }
 
 export interface ICompanyInfo extends IStatistics {
+  id: number
   name: string
   phoneNumber: string
   agentsCount: number
@@ -82,3 +85,5 @@ export interface IUserCredentials {
   login: string
   password: string
 }
+
+export type IUser = Omit<User, "password">

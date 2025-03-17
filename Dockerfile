@@ -23,6 +23,8 @@ FROM node:18-slim AS production
 
 RUN corepack enable && yarn set version 4.7.0
 
+RUN apt-get update && apt-get install -y openssl
+
 WORKDIR /app
 
 # Копируем только необходимые файлы
@@ -35,6 +37,6 @@ COPY --from=builder /app/.output ./.output
 COPY --from=builder /app/prisma ./prisma
 
 # Применяем миграции и запускаем
-CMD yarn prisma migrate deploy && \
-    node ./prisma/seed.js && \
+CMD yarn prisma:migrate && \
+    yarn seed && \
     yarn start

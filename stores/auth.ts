@@ -1,12 +1,11 @@
 import { defineStore } from "pinia"
-import type { IUserCredentials } from "~/utils/types"
-import type { User } from "@prisma/client"
+import type { IUser, IUserCredentials } from "~/utils/types"
 
 export const useAuthStore = defineStore(
   "auth",
   () => {
     const _accessToken = ref<string | null>(null)
-    const user = ref<Omit<User, "password"> | null>(null)
+    const user = ref<IUser | null>(null)
 
     const login = async (credentials: IUserCredentials) => {
       try {
@@ -30,9 +29,9 @@ export const useAuthStore = defineStore(
       user.value = null
     }
 
-    const getUserData = async (): Promise<Omit<User, "password"> | null> => {
+    const getUserData = async (): Promise<IUser | null> => {
       try {
-        return await $fetch<Omit<User, "password">>("/api/auth/profile", {
+        return await $fetch<IUser>("/api/auth/profile", {
           headers: {
             authorization: `Bearer ${_accessToken.value}`,
           },
@@ -74,10 +73,10 @@ export const useAuthStore = defineStore(
           return true
         }
       }
-      _accessToken.value = null
-      user.value = null
 
       // Если всё провалилось
+      _accessToken.value = null
+      user.value = null
       return false
     }
 

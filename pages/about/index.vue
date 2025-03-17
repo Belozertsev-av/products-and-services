@@ -97,6 +97,7 @@ import {
 } from "vue-yandex-maps"
 
 const company = ref<ICompanyInfo>({
+  id: 1,
   name: "Наследие",
   phoneNumber: "+7 (951) 669-21-54",
   img: "company_logo.webp",
