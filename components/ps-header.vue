@@ -12,7 +12,25 @@
         icon="menu"
         round
         flat
-      />
+      >
+        <q-popup-proxy>
+          <q-card style="min-width: 200px">
+            <q-card-section class="bg-primary text-white">
+              {{ authStore.user?.firstName }} {{ authStore.user?.lastName }}
+            </q-card-section>
+
+            <q-card-actions vertical>
+              <q-btn
+                v-close-popup
+                flat
+                label="Выйти"
+                align="left"
+                @click="authStore.logout"
+              />
+            </q-card-actions>
+          </q-card>
+        </q-popup-proxy>
+      </q-btn>
     </div>
     <div class="header__block">
       <div class="header__logo title">Annoncé</div>
@@ -57,6 +75,23 @@
           alt="avatar"
           class="header__avatar q-ml-sm"
         />
+        <q-popup-proxy>
+          <q-card style="min-width: 200px">
+            <q-card-section class="bg-primary text-white">
+              {{ authStore.user?.firstName }} {{ authStore.user?.lastName }}
+            </q-card-section>
+
+            <q-card-actions vertical>
+              <q-btn
+                v-close-popup
+                flat
+                label="Выйти"
+                align="left"
+                @click="authStore.logout"
+              />
+            </q-card-actions>
+          </q-card>
+        </q-popup-proxy>
       </q-btn>
     </div>
     <div
@@ -79,6 +114,8 @@
 
 <script setup lang="ts">
 const device = useDevice()
+
+const authStore = useAuthStore()
 </script>
 
 <style lang="scss" scoped>

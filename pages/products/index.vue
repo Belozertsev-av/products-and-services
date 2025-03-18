@@ -7,12 +7,24 @@
         :grouped-options="groupedOptions"
       />
     </div>
-    <div class="products__body">
+    <div
+      v-if="!isLoading && ads"
+      class="products__body"
+    >
       <ad-card
         v-for="ad in ads"
         :key="ad.id"
         :ad-info="ad"
         class="products__card"
+      />
+    </div>
+    <div
+      v-else
+      class="products__spinner-body"
+    >
+      <q-spinner
+        color="primary"
+        size="4rem"
       />
     </div>
   </div>
@@ -27,6 +39,7 @@ import type {
   IGroupedSelectOption,
   ISelectOption,
 } from "~/utils/types"
+import { usePaginatedData } from "~/composables/usePaginatedData"
 
 const selected = ref<ISelectOption | null>(null)
 const groupedOptions = ref<IGroupedSelectOption[]>([
@@ -46,96 +59,17 @@ const groupedOptions = ref<IGroupedSelectOption[]>([
   },
 ])
 
-const ads = ref<IAdInfo[]>([
-  {
-    id: 1,
-    img: "Img-1.webp",
-    price: 450500,
-    currency: "RUB",
-    label: "Сlavia Nord Grand сценическое цифровое пианино",
-    type: "product",
-    status: "PROMOTING",
-    watched: 750,
-    createdAt: 1741844517,
-  },
-  {
-    id: 2,
-    img: "Img-2.webp",
-    price: 3285000,
-    currency: "RUB",
-    label: "Hyundai Sonata 2.0 AT, 2023, 30 км",
-    type: "product",
-    status: "CREATED",
-    watched: 255,
-    createdAt: 1741671717,
-  },
-  {
-    id: 3,
-    img: "Img-3.webp",
-    price: 4800000,
-    currency: "RUB",
-    label: "2-к. квартира, 46 м², 1/5 эт.",
-    type: "product",
-    status: "CREATED",
-    watched: 255,
-    createdAt: 1741936396,
-  },
-  {
-    id: 4,
-    img: "Img-4.webp",
-    price: 7500,
-    currency: "RUB",
-    label: "Старые барабаны",
-    type: "product",
-    status: "CREATED",
-    watched: 255,
-    createdAt: 1741844517,
-  },
-  {
-    id: 5,
-    img: "Img-5.webp",
-    price: 7500,
-    currency: "RUB",
-    label: "DMX сплиттер RJ45 to 4x XLR Stairville",
-    type: "product",
-    status: "CREATED",
-    watched: 320,
-    createdAt: 1741671717,
-  },
-  {
-    id: 6,
-    img: "Img-6.webp",
-    price: 217500,
-    currency: "RUB",
-    label: "Мотоцикл Honda",
-    type: "product",
-    status: "CREATED",
-    watched: 255,
-    createdAt: 1742033600,
-  },
-  {
-    id: 7,
-    img: "Img-7.webp",
-    price: 17900,
-    currency: "RUB",
-    label: "Иж юпитер 5",
-    type: "product",
-    status: "CREATED",
-    watched: 255,
-    createdAt: 1740899596,
-  },
-  {
-    id: 8,
-    img: "Img-8.webp",
-    price: 7500,
-    currency: "RUB",
-    label: "Пылесос кёрхер с водяным мешком для сбора пыли",
-    type: "product",
-    status: "CLOSED",
-    watched: 255,
-    createdAt: 1741844517,
-  },
-])
+const { list: ads, isLoading, getData: getAds } = usePaginatedData<IAdInfo>()
+
+onBeforeMount(async () => {
+  const companyId = 1 // STUB
+
+  await getAds("products", {
+    params: {
+      id: companyId,
+    },
+  })
+})
 </script>
 
 <style lang="scss" scoped>
@@ -156,6 +90,15 @@ const ads = ref<IAdInfo[]>([
     width: 100%;
     height: fit-content;
     margin-bottom: 4rem;
+  }
+
+  &__spinner-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin-top: 2rem;
   }
 }
 

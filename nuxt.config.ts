@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   runtimeConfig: {
     jwtSecret: process.env.JWT_SECRET,
+    baseApi: process.env.API_BASE_URL,
   },
   app: {
     pageTransition: { name: "fade", mode: "out-in" },

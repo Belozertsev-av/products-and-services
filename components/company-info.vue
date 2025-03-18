@@ -40,10 +40,10 @@
 </template>
 
 <script setup lang="ts">
-import type { ICompanyInfo } from "~/utils/types"
+import type { ICompany } from "~/utils/types"
 
 const { hidePhone = false } = defineProps<{
-  companyInfo: ICompanyInfo
+  companyInfo: ICompany
   hidePhone?: boolean
 }>()
 const isPhoneShown = ref<boolean>(false)

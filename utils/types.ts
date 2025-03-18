@@ -47,13 +47,15 @@ export interface IAgentInfo extends IStatistics {
   description: string
 }
 
-export interface ICompanyInfo extends IStatistics {
+export interface ICompanyInfo {
   id: number
   name: string
   phoneNumber: string
   agentsCount: number
   img: string | null
 }
+
+export interface ICompany extends ICompanyInfo, IStatistics {}
 
 export interface ICompanyAdditionalInfo {
   description: string
@@ -87,3 +89,14 @@ export interface IUserCredentials {
 }
 
 export type IUser = Omit<User, "password">
+
+export interface IPage {
+  zeroBasedNumber: number
+  size: number
+}
+
+export type PaginationResult<T> = {
+  page: IPage
+  resources: T
+  resourcesTotalNumber: number
+}

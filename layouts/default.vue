@@ -21,19 +21,30 @@
 </template>
 
 <script lang="ts" setup>
-import type { ICompanyInfo } from "~/utils/types"
+import type { ICompany, ICompanyInfo, IStatistics } from "~/utils/types"
+import { useAPI } from "~/composables/useAPI"
 
 const device = useDevice()
 
-const authStore = useAuthStore()
-const company = ref<ICompanyInfo | null>(null)
+const company = ref<ICompany | null>(null)
 
 onBeforeMount(async () => {
-  company.value = await $fetch<ICompanyInfo>("/api/companies/1", {
-    method: "GET",
-    headers: {
-      authorization: `Bearer ${authStore.accessToken}`,
-    },
-  })
+  const companyId = 1 // STUB
+
+  const [companyInfo, companyRating] = await Promise.all([
+    await useAPI().get<ICompanyInfo>(`companies/${companyId}`),
+    await useAPI().get<IStatistics>("companies/rating", {
+      params: {
+        id: companyId,
+      },
+    }),
+  ])
+
+  if (companyInfo && companyRating) {
+    company.value = {
+      ...companyInfo,
+      ...companyRating,
+    }
+  }
 })
 </script>

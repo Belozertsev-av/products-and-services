@@ -26,6 +26,8 @@ export const useAuthStore = defineStore(
       await $fetch("/api/auth/logout", { method: "POST" })
       accessToken.value = null
       user.value = null
+
+      await navigateTo("/")
     }
 
     const getUserData = async (): Promise<IUser | null> => {
