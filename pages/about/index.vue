@@ -85,7 +85,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ICompanyAdditionalInfo, ICompanyInfo } from "~/utils/types"
+import type { ICompany, ICompanyAdditionalInfo } from "~/utils/types"
 
 import { shallowRef } from "vue"
 import type { YMap } from "@yandex/ymaps3-types"
@@ -96,7 +96,7 @@ import {
   YandexMapDefaultSchemeLayer,
 } from "vue-yandex-maps"
 
-const company = ref<ICompanyInfo>({
+const company = ref<ICompany>({
   id: 1,
   name: "Наследие",
   phoneNumber: "+7 (951) 669-21-54",

@@ -7,30 +7,7 @@
       v-if="device.isMobileOrTablet"
       class="header__block"
     >
-      <q-btn
-        class="header__burger-menu"
-        icon="menu"
-        round
-        flat
-      >
-        <q-popup-proxy>
-          <q-card style="min-width: 200px">
-            <q-card-section class="bg-primary text-white">
-              {{ authStore.user?.firstName }} {{ authStore.user?.lastName }}
-            </q-card-section>
-
-            <q-card-actions vertical>
-              <q-btn
-                v-close-popup
-                flat
-                label="Выйти"
-                align="left"
-                @click="authStore.logout"
-              />
-            </q-card-actions>
-          </q-card>
-        </q-popup-proxy>
-      </q-btn>
+      <burger-menu />
     </div>
     <div class="header__block">
       <div class="header__logo title">Annoncé</div>
@@ -65,34 +42,7 @@
         round
         >Разместить объявление</q-btn
       >
-      <q-btn
-        icon="menu"
-        round
-        class="header__profile-btn"
-      >
-        <img
-          src="/avatar.webp"
-          alt="avatar"
-          class="header__avatar q-ml-sm"
-        />
-        <q-popup-proxy>
-          <q-card style="min-width: 200px">
-            <q-card-section class="bg-primary text-white">
-              {{ authStore.user?.firstName }} {{ authStore.user?.lastName }}
-            </q-card-section>
-
-            <q-card-actions vertical>
-              <q-btn
-                v-close-popup
-                flat
-                label="Выйти"
-                align="left"
-                @click="authStore.logout"
-              />
-            </q-card-actions>
-          </q-card>
-        </q-popup-proxy>
-      </q-btn>
+      <profile-burger-menu />
     </div>
     <div
       v-else
@@ -113,9 +63,10 @@
 </template>
 
 <script setup lang="ts">
-const device = useDevice()
+import BurgerMenu from "~/components/ui/burger-menu.vue"
+import ProfileBurgerMenu from "~/components/ui/profile-burger-menu.vue"
 
-const authStore = useAuthStore()
+const device = useDevice()
 </script>
 
 <style lang="scss" scoped>

@@ -7,14 +7,14 @@ export default defineNuxtRouteMiddleware(async (to) => {
   // Для авторизованных пользователей
   if (isAuthenticated) {
     // Если пытаются перейти на "/" или "/login" — редирект на "/products"
-    if (to.path === "/") {
+    if (to.path === "/login") {
       return navigateTo("/products", { redirectCode: 301, replace: true })
     }
     return
   }
 
   // Для неавторизованных пользователей
-  if (to.path !== "/") {
-    return navigateTo("/", { replace: true })
+  if (to.path !== "/login") {
+    return navigateTo("/login", { replace: true })
   }
 })

@@ -2,6 +2,7 @@ import type { IPage, PaginationResult } from "~/utils/types"
 import { useAPI } from "~/composables/useAPI"
 import type { NitroFetchOptions, NitroFetchRequest } from "nitropack/types"
 import { DEFAULT_PAGE_SIZE } from "~/utils/contants"
+import type { UnwrapRef } from "vue"
 
 interface PaginatedDataState<T> {
   page: IPage
@@ -37,7 +38,7 @@ export const usePaginatedData = <T>() => {
     })
 
     if (result) {
-      state.list.push(...result.resources)
+      state.list.push(...(result.resources as UnwrapRef<T[]>))
       state.totalCount = result.resourcesTotalNumber
     }
 

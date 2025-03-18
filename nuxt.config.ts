@@ -5,9 +5,21 @@ export default defineNuxtConfig({
     baseApi: process.env.API_BASE_URL,
   },
   app: {
+    head: {
+      link: [{ rel: "icon", href: "/favicon.ico" }],
+      title: "Annoncé - Товары и услуги без посредников",
+    },
     pageTransition: { name: "fade", mode: "out-in" },
     layoutTransition: { name: "fade", mode: "out-in" },
   },
+  components: [
+    {
+      path: "~/components",
+      pathPrefix: false,
+      extensions: [".vue"],
+      global: true,
+    },
+  ],
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
   modules: [

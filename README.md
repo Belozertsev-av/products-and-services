@@ -1,75 +1,60 @@
-# Nuxt Minimal Starter
+# Annoncé
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Это демонстрационное Fullstack приложение. Проект реализован на TypeScript с использованием 
+Nuxt 3, Vue, Prisma, Pinia, PostgreSQL, Redis.
 
-## Setup
+## Функциональность
 
-Make sure to install dependencies:
+### Операции для пользователей:
 
-```bash
-# npm
-npm install
+- get: Получение данных о компании.
+- get: Получение статистики по отзывам о компании.
+- get: Получение списка продуктов компании с пагинацией.
 
-# pnpm
-pnpm install
+### Авторизация:
 
-# yarn
-yarn install
+Реализована с использованием JWT (JSON Web Tokens).
 
-# bun
-bun install
-```
+Используются два типа токенов:
 
-## Development Server
+- Access Token: Короткоживущий токен для доступа к защищенным ресурсам.
+- Refresh Token: Долгоживущий токен для обновления Access Token.
 
-Start the development server on `http://localhost:3000`:
+После успешной авторизации, токены сохраняются в браузере.
 
-```bash
-# npm
-npm run dev
+### Заполнение базы данных:
 
-# pnpm
-pnpm dev
+Используются seeds для заполнения таблиц тестовыми данными через Prisma.
 
-# yarn
-yarn dev
+## Стек технологий
 
-# bun
-bun run dev
-```
+- TypeScript
+- Nuxt 3
+- Vue 3 Composition API
+- Pinia
+- Prisma
+- PostgreSQL
+- Redis
 
-## Production
+## Установка и запуск
 
-Build the application for production:
+####  1. Клонируйте репозиторий:
+   ```bash
+   git clone https://github.com/Belozertsev-av/products-and-services
+   ```
 
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
+#### 2. Перейдите в директорию проекта:
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+cd products-and-services
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+#### 3. Запустите сервер разработки из корня проекта:
+
+```bash
+docker compose up --build
+```
+
+Будет собран проект, выполнены миграции и сидинг. После чего будет запущен сервер.
+
+#### 4.Откройте браузер и перейдите по адресу http://localhost:80.

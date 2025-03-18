@@ -9,10 +9,9 @@ export const useAuthStore = defineStore(
 
     const login = async (credentials: IUserCredentials) => {
       try {
-        const { accessToken: _accessToken } = await $fetch<{
+        const { accessToken: _accessToken } = await useAPI().post<{
           accessToken: string
-        }>("/api/auth/login", {
-          method: "POST",
+        }>("auth/login", {
           body: credentials,
         })
         accessToken.value = _accessToken
@@ -23,7 +22,7 @@ export const useAuthStore = defineStore(
     }
 
     const logout = async () => {
-      await $fetch("/api/auth/logout", { method: "POST" })
+      await useAPI().post("auth/logout")
       accessToken.value = null
       user.value = null
 
@@ -32,11 +31,7 @@ export const useAuthStore = defineStore(
 
     const getUserData = async (): Promise<IUser | null> => {
       try {
-        return await $fetch<IUser>("/api/auth/profile", {
-          headers: {
-            authorization: `Bearer ${accessToken.value}`,
-          },
-        })
+        return await useAPI().get<IUser>("auth/profile")
       } catch (error: any) {
         return null
       }
@@ -44,9 +39,9 @@ export const useAuthStore = defineStore(
 
     const refreshToken = async (): Promise<string | null> => {
       try {
-        const { accessToken } = await $fetch("/api/auth/refresh", {
-          method: "POST",
-        })
+        const { accessToken } = await useAPI().post<{ accessToken: string }>(
+          "auth/refresh",
+        )
         return accessToken
       } catch (error) {
         return null
